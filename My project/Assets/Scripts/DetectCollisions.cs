@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class DetectCollisions : MonoBehaviour
 {
+    private GameObject player;
+    private PlayerController scriptPlayer;
     // Start is called before the first frame update
     void Start()
     {
-        
+        player = GameObject.FindWithTag("Player");
+        scriptPlayer = player.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -18,7 +21,15 @@ public class DetectCollisions : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(gameObject);
-        Destroy(other.gameObject);
+        if (other.gameObject.CompareTag("Player"))
+        {
+
+        }
+        else
+        {
+            scriptPlayer.ponto += 100;
+            Destroy(gameObject);
+            Destroy(other.gameObject);
+        }
     }
 }

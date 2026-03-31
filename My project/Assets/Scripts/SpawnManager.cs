@@ -7,19 +7,33 @@ public class SpawnManager : MonoBehaviour
     public GameObject[] animalPrefabs;
     private float spawnRangeX = 20f;
     private float spawnPositionZ = 20f;
-    private float startDelay = 2f;
-    private float spawnInterval = 1.5f;
+    public float spawnInterval = 1.5f;
+
+    private bool corrotina;
 
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("SpawnAnimal", startDelay, spawnInterval);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        spawnInterval -= Time.deltaTime / 100f;
+
+        if (corrotina == false)
+        {
+            StartCoroutine(Timer());
+            corrotina = true;
+        }
+    }
+
+    IEnumerator Timer()
+    {
+        yield return new WaitForSeconds(spawnInterval);
+        SpawnAnimal();
+        corrotina = false;
     }
 
     void SpawnAnimal()

@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     private InputAction fireAction;
     private InputAction ghostAction;
 
+    public int vida;
+    public int ponto;
+
 
     private void Awake()
     {
@@ -27,7 +30,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        vida = 3;
+        ponto = 0;
     }
 
     // Update is called once per frame
@@ -56,8 +60,17 @@ public class PlayerController : MonoBehaviour
         if (ghostAction.WasPressedThisFrame())
         {
             skin.SetActive(false);
+            gameObject.GetComponent<BoxCollider>().enabled = false;
+            StartCoroutine(Ghost());
         }
         
+    }
+
+    IEnumerator Ghost()
+    {
+        yield return new WaitForSeconds(2);
+        skin.SetActive(true);
+        gameObject.GetComponent<BoxCollider>().enabled = true;
     }
 
     private void OnEnable()
